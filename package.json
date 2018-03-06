@@ -1,0 +1,40 @@
+{
+  "name": "@redice44/canvas-lms-object-pages",
+  "version": "0.0.1",
+  "description": "Creates an object representation of a Canvas LMS Page",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "clean": "find ./src -type f -name '*.js' -delete && find ./src -type f -name '*.js.map' -delete",
+    "clean-dist": "rm -rf ./dist",
+    "dist": "npm run build && mkdir -p ./dist && cp -r ./src/* ./dist/ && find ./dist -type f -name '*.ts' -delete && find ./dist -type f -name '*.js.map' -delete && find ./dist -type d -name '__tests__' -exec rm -r {} +",
+    "test": "jest",
+    "watch": "tsc -w"
+  },
+  "keywords": [],
+  "author": "Matt Thomson <mthomson.lee@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@redice44/canvas-lms-promise-pages": "https://github.com/redice44/canvas-lms-promise-pages.git#v0.0.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.0",
+    "@types/node": "^9.4.6",
+    "dotenv": "^5.0.1",
+    "jest": "^22.4.2",
+    "typescript": "^2.7.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
+    },
+    "testMatch": [
+      "**/__tests__/*.(ts|tsx)"
+    ]
+  }
+}
