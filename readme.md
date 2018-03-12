@@ -1,6 +1,6 @@
 # Canvas LMS Objects: Pages
 
-Promise driven driver for Cavnas LMS Pages's REST API.
+Object Oriented Class for Canvas LMS Page.
 
 # Setup
 
