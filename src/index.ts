@@ -1,40 +1,20 @@
 import * as PageAPI from '@redice44/canvas-lms-promise-pages';
 
-import { Page, PageReq, PageState, PageUpdateOptions } from './interfaces';
+import { Page, CanvasPageData, PageState } from './interfaces';
 
 export default class CanvasPage {
 
   courseId: number;
   page: Page;
+  data: CanvasPageData;
   state: PageState;
 
-  constructor( courseId: number ) {
+  constructor( courseId: number, data: CanvasPageData = null ) {
 
     this.courseId = courseId;
+    this.data = data;
     this.page = null;
-    this.state = PageState.Empty;
-
-  }
-
-  async create( page: PageReq ): Promise < CanvasPage > {
-
-    let err = null;
-
-    try {
-
-      this.page = await PageAPI.create( this.courseId, page );
-
-    } catch( e ) {
-
-      err = e;
-
-    }
-
-    return new Promise( ( resolve: ( value: CanvasPage ) => any, reject ) =>
-
-      err ? reject( err ) : resolve( this )
-
-    );
+    this.state = data ? PageState.Fresh : PageState.Empty;
 
   }
 
@@ -68,6 +48,16 @@ export default class CanvasPage {
     try {
 
       this.page = await PageAPI.get( this.courseId, pageUrl );
+      this.state = PageState.Fresh;
+      this.data = {
+
+        url: this.page.url,
+        title: this.page.title,
+        body: this.page.body,
+        published: this.page.published,
+        front_page: this.page.front_page
+
+      };
 
     } catch( e ) {
 
@@ -83,21 +73,16 @@ export default class CanvasPage {
 
   }
 
-  get(): Page {
+  get(): CanvasPageData {
 
-    return this.page;
+    return this.data;
 
   }
 
-  update( opts: PageUpdateOptions = {} ): CanvasPage {
+  update( pageData: CanvasPageData ): CanvasPage {
 
     this.state = PageState.Updated;
-
-    for ( const key in opts ) {
-
-      this.page[ key ] = opts[ key ];
-
-    }
+    this.data = pageData;
 
     return this;
 
@@ -109,7 +94,8 @@ export default class CanvasPage {
 
     try {
 
-      await PageAPI.update( this.courseId, this.page );
+      this.page = await PageAPI.update( this.courseId, this.data );
+      this.state = PageState.Fresh;
 
     } catch( e ) {
 

@@ -40,20 +40,12 @@ export enum PageState {
 
 }
 
-export interface ListOpts {
+export interface CanvasPageData {
 
-  sort?: "title"|"created_at"|"updated_at";
-  order?: "asc"|"dec";
-  search_term?: string;
-  published?: boolean;
-
-}
-
-export interface PageUpdateOptions {
-
-  title?: string;
-  body?: string;
-  published?: boolean;
-  front_page?: boolean;
+  url?: string;
+  title: string;
+  body: string;
+  published: boolean;
+  front_page: boolean;
 
 }
