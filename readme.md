@@ -1,4 +1,4 @@
-# Canvas LMS REST API: Pages
+# Canvas LMS Objects: Pages
 
 Promise driven driver for Cavnas LMS Pages's REST API.
 
