@@ -16,47 +16,89 @@ CANVAS_TOKEN=YOUR_CANVAS_API_TOKEN
 ```
 
 # API
-- [CanvasPage( courseId )](#canvaspage-courseid-data-)
-- [page.del()](#page-del-)
-- [page.fetch( pageUrl )](#page-fetch-pageurl-)
-- [page.get()](#page-get-)
-- [page.update( options )](#page-update-pagedata-)
-- [page.save()](#page-save-)
+
+- [CanvasPage.newPage( courseId, pageData )](#canvaspage-newpage-courseid-data-)
+- [CanvasPage.fetchPage( courseId, pageUrl )](#canvaspage-fetchpage-courseid-pageurl-)
+- [CanvasPage.fetchPages( courseId, listOptions )](#canvaspage-fetchpages-courseid-listoptions-)
+- [class: Page( courseId )](#canvaspage-courseid-data-)
+  - [prop: page.url](#page-properties)
+  - [prop: page.title](#page-properties)
+  - [prop: page.body](#page-properties)
+  - [prop: page.published](#page-properties)
+  - [prop: page.frontPage](#page-properties)
+  - [page.del()](#page-del-)
+  - [page.fetch( pageUrl )](#page-fetch-pageurl-)
+  - [page.get()](#page-get-)
+  - [page.save()](#page-save-)
 
 ---
 
-### CanvasPage( courseId, data )
+### CanvasPage.newPage( courseId, data )
+
+- `courseId` <[number]> Course ID
+- `data` <[PageData]> Optional
+- `return` <[Page]>
+
+Creates a new Page.
+
+### CanvasPage.fetchPage( courseId, pageUrl )
+
+- `courseId` <[number]> Course ID
+- `pageUrl` <[string]> URL fragement for the page to retrieve.
+- `return` <[Promise] <[Page]> >
+
+Fetches a page from Canvas LMS.
+
+### CanvasPage.fetchPages( courseId, listOptions )
+
+- `courseId` <[number]> Course ID
+- `listOptions` <[ListOptions]> Optional
+- `return` <[Promise] <[Array] <[Page]> > >
+
+Fetches a list of pages from Canvas LMS.
+
+---
+
+### Page( courseId )
 
 - `courseId` <[number]>
-- `data` (Optional) <[CanvasPageData]>
+- `data` <[PageData]> Optional
 
 Creates a CanvasPage object for the specified course.
 
+### Page Properties
+
+- `url` <[string]> Read Only
+- `title` <[string]>
+- `body` <[string]>
+- `published` <[boolean]>
+- `frontPage` <[boolean]>
+
 ### page.del()
 
-- `return` <[Promise] <[CanvasPage]> > The object is returned for chaining.
+- `return` <[Promise] <[Page]> > The object is returned for chaining.
 
 Deletes the page on Canvas LMS.
 
 ### page.fetch( pageUrl )
 
 - `pageUrl` <[string]> The url fragment for the page
-- `return` <[Promise] <[CanvasPage]> > The object is returned for chaining.
+- `return` <[Promise] <[Page]> > The object is returned for chaining.
 
 Internal page data is updated with the page from Canvas LMS.
 
 ### page.get()
 
-- `return` <[CanvasPageData]> The Canvas Page Data.
+- `return` <[PageData]> The Canvas Page Data.
 
 ### page.update( pageData )
 
-- `pageData` <[CanvasPageData]>
-- `return` <[CanvasPage]> The object is returned for chaining.
+- `pageData` <[PageData]>
+- `return` <[Page]> The object is returned for chaining.
 
 ### page.save()
 
-- `return` <[Promise] <[CanvasPage]> > The object is returned for chaining.
+- `return` <[Promise] <[Page]> > The object is returned for chaining.
 
 Updates the page in Canvas LMS with the internal page data.
 
@@ -70,10 +112,18 @@ Updates the page in Canvas LMS with the internal page data.
 - `published` <[boolean]>
 - `front_page` <[boolean]>
 
+### List Options
+
+- `sort` title | created_at | updated_at
+- `order` asc | dec
+- `search_term` <[string]>
+- `published` <[boolean]>
+
 [Array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array "Array"
 [boolean]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type "Boolean"
-[CanvasPage]: #api "Canvas Page"
-[CanvasPageData]: #canvas-page-data "Canvas Page Data"
+[Page]: #api "Page"
+[PageData]: #canvas-page-data "Page Data"
+[ListOptions]: #list-options "List Options"
 [number]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type "Number"
 [Object]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object "Object"
 [Promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise "Promise"
