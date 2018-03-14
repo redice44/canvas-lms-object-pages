@@ -9,68 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const PageAPI = require("@redice44/canvas-lms-promise-pages");
-const interfaces_1 = require("./interfaces");
-class CanvasPage {
-    constructor(courseId, data = null) {
-        this.courseId = courseId;
-        this.data = data;
-        this.page = null;
-        this.state = data ? interfaces_1.PageState.Fresh : interfaces_1.PageState.Empty;
-    }
-    del() {
-        return __awaiter(this, void 0, void 0, function* () {
-            let err = null;
-            try {
-                this.page = yield PageAPI.del(this.courseId, this.page.url);
-                this.state = interfaces_1.PageState.Deleted;
-            }
-            catch (e) {
-                err = e;
-            }
-            return new Promise((resolve, reject) => err ? reject(err) : resolve(this));
-        });
-    }
-    fetch(pageUrl) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let err = null;
-            try {
-                this.page = yield PageAPI.get(this.courseId, pageUrl);
-                this.state = interfaces_1.PageState.Fresh;
-                this.data = {
-                    url: this.page.url,
-                    title: this.page.title,
-                    body: this.page.body,
-                    published: this.page.published,
-                    front_page: this.page.front_page
-                };
-            }
-            catch (e) {
-                err = e;
-            }
-            return new Promise((resolve, reject) => err ? reject(err) : resolve(this));
-        });
-    }
-    get() {
-        return this.data;
-    }
-    update(pageData) {
-        this.state = interfaces_1.PageState.Updated;
-        this.data = pageData;
-        return this;
-    }
-    save() {
-        return __awaiter(this, void 0, void 0, function* () {
-            let err = null;
-            try {
-                this.page = yield PageAPI.update(this.courseId, this.data);
-                this.state = interfaces_1.PageState.Fresh;
-            }
-            catch (e) {
-                err = e;
-            }
-            return new Promise((resolve, reject) => err ? reject(err) : resolve(this));
-        });
-    }
-}
-exports.default = CanvasPage;
+const page_1 = require("./page");
+exports.newPage = (courseId, data = {}) => new page_1.default(courseId, data);
+exports.fetchPage = (courseId, pageUrl) => new page_1.default(courseId).fetch(pageUrl);
+exports.fetchPages = (courseId, listOptions = {}) => __awaiter(this, void 0, void 0, function* () {
+    return Promise.all((yield PageAPI.list(courseId, listOptions)).map(page => exports.fetchPage(courseId, page.url)));
+});
 //# sourceMappingURL=index.js.map
