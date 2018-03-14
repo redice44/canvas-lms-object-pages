@@ -1,5 +1,5 @@
 {
-  "name": "@redice44/canvas-lms-object-pages",
+  "name": "@redice44/canvas-lms-object-page",
   "version": "0.0.1",
   "description": "Creates an object representation of a Canvas LMS Page",
   "main": "dist/index.js",
