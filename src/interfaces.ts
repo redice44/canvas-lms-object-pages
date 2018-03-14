@@ -43,9 +43,18 @@ export enum PageState {
 export interface CanvasPageData {
 
   url?: string;
-  title: string;
-  body: string;
-  published: boolean;
-  front_page: boolean;
+  title?: string;
+  body?: string;
+  published?: boolean;
+  front_page?: boolean;
+
+}
+
+export interface ListOpts {
+
+  sort?: "title"|"created_at"|"updated_at";
+  order?: "asc"|"dec";
+  search_term?: string;
+  published?: boolean;
 
 }
